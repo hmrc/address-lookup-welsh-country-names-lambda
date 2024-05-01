@@ -14,10 +14,13 @@ pipeline {
     }
     stage('Push to ecr') {
       steps {
+        script {
+          build_version = readFile ".version"
+        }
         sh("""
           aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 727065427295.dkr.ecr.eu-west-2.amazonaws.com
-          docker tag cip-insights-reputation/address-lookup-welsh-country-names-lambda:latest 727065427295.dkr.ecr.eu-west-2.amazonaws.com/cip-insights-reputation/address-lookup-welsh-country-names-lambda:latest
-          docker push 727065427295.dkr.ecr.eu-west-2.amazonaws.com/cip-insights-reputation/address-lookup-welsh-country-names-lambda:latest
+          docker tag cip-insights-reputation/address-lookup-welsh-country-names-lambda:latest 727065427295.dkr.ecr.eu-west-2.amazonaws.com/cip-insights-reputation/address-lookup-welsh-country-names-lambda:$build_version
+          docker push 727065427295.dkr.ecr.eu-west-2.amazonaws.com/cip-insights-reputation/address-lookup-welsh-country-names-lambda:$build_version
         """)
       }
     }

@@ -66,7 +66,8 @@ def download_data(event=None, context=None):
 
     # footer = driver.find_element(By.ID, "page-feedback-link")
     # footer.location_once_scrolled_into_view
-    # driver.save_screenshot("ss2.png")
+    # driver.save_screenshot("/tmp/ss2.png")
+    # upload_to_s3("/tmp/ss2.png", bucket_name, "ss2.png")
 
     element = driver.find_element(By.PARTIAL_LINK_TEXT, "Enwau gwledydd – Country names")
     element.click()
